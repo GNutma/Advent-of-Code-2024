@@ -1,0 +1,26 @@
+name: Quality Control
+
+on: [push]
+
+env:
+  UV_FROZEN: true
+
+jobs:
+  quality-control:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install the latest version of uv and set the python version
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+      - name: Install dev dependencies
+        run: uv sync --all-extras
+      - name: Style check
+        run: uv run poe style
+      - name: Type check
+        run: uv run poe types
+      - name: Lint check
+        run: uv run poe lint
+      - name: Unittests
+        run: uv run poe test
