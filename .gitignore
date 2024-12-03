@@ -71,3 +71,6 @@ dmypy.json
 .ionide
 .history/
 *.vsix
+
+# Ignore exercise input files
+.exercise_input/
